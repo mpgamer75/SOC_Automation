@@ -84,8 +84,8 @@ Pour distribuer l'application à votre équipe sans qu'ils aient besoin d'instal
 
 ## Contributeurs
 
-[Votre Nom/Nom de l'Équipe]
+mpgamer75
 
 ## Licence
 
-[Votre Licence (si applicable)]
+Licence MIT
