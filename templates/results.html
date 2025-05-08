@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Résultats de la comparaison</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .found {
+            color: green;
+            font-weight: bold;
+        }
+        .not-found {
+            color: red;
+            font-weight: bold;
+        }
+        .error-search {
+            color: orange;
+            font-weight: bold;
+        }
+        .ad-info-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .ad-info-list li {
+            margin-bottom: 5px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Résultats de la comparaison Excel / Active Directory</h1>
+    {% if results %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom dans l'Excel</th>
+                    <th>Trouvé dans l'AD</th>
+                    <th>Informations AD (si trouvé)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result.name_excel }}</td>
+                        <td class="{% if result.found_in_ad == True %}found{% elif result.found_in_ad == False %}not-found{% else %}error-search{% endif %}">
+                            {% if result.found_in_ad == True %}Oui{% elif result.found_in_ad == False %}Non{% else %}{{ result.found_in_ad }}{% endif %}
+                        </td>
+                        <td>
+                            {% if result.ad_info %}
+                                <ul class="ad-info-list">
+                                {% for key, value in result.ad_info.items() %}
+                                    <li><strong>{{ key }}:</strong> {{ value }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun résultat à afficher.</p>
+    {% endif %}
+    <p><a href="{{ url_for('upload_file') }}">Retour à l'upload</a></p>
+</body>
+</html>
