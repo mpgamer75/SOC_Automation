@@ -1,21 +1,46 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import pandas as pd
 from ldap3 import Server, Connection, ALL, LDAPBindError, LDAPSocketOpenError
+from dotenv import load_dotenv
+import os
+from werkzeug.utils import secure_filename
+
+# Charger les variables d'environnement depuis le fichier .env
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = ' Altice_IT_104729'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER', 'uploads')
+app.config['ALLOWED_EXTENSIONS'] = {'xlsx', 'xls', 'csv'}
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limiter la taille des fichiers à 16 Mo
 
-# Configuration LDAP (à ADAPTER avec vos informations)
-app.config['LDAP_HOST'] = 'ldap.example.com'
-app.config['LDAP_PORT'] = 389  # Ou 636 si LDAPS
-app.config['LDAP_BASE_DN'] = 'dc=example,dc=com'
-app.config['LDAP_BIND_USER_DN'] = 'cn=admin,dc=example,dc=com'
-app.config['LDAP_BIND_USER_PASSWORD'] = 'password'
-app.config['LDAP_USE_SSL'] = False
-app.config['LDAP_SEARCH_SCOPE'] = 'SUBTREE'
-app.config['LDAP_USER_OBJECT_FILTER'] = '(objectClass=person)' # Optionnel
+# Créer le dossier de téléchargement s'il n'existe pas
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+def allowed_file(filename):
+    """Vérifie si l'extension du fichier est autorisée."""
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+def validate_excel(file):
+    """Valide le fichier Excel téléchargé."""
+    if not allowed_file(file.filename):
+        return "Format du fichier non autorisé"
+    
+    filename = secure_filename(file.filename)
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    file.save(file_path)
+
+    try:
+        df = pd.read_excel(file_path)
+        if 'Nom Complet' not in df.columns:
+            return "La colonne 'Nom Complet' est manquante dans le fichier"
+    except Exception as e:
+        return f"Erreur lors de la lecture du fichier Excel : {str(e)}"
+    
+    return None
 
 def compare_excel_to_ad(excel_file):
+    """Compare les noms du fichier Excel avec l'Active Directory."""
     try:
         df = pd.read_excel(excel_file)
         if 'Nom Complet' not in df.columns:
@@ -69,6 +94,7 @@ def compare_excel_to_ad(excel_file):
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
+    """Route pour télécharger et traiter le fichier Excel."""
     error = None
     results = []
     if request.method == 'POST':
@@ -79,9 +105,13 @@ def upload_file():
             if file.filename == '':
                 error = 'Aucun fichier sélectionné.'
             elif file:
-                ldap_error, results = compare_excel_to_ad(file)
-                if ldap_error:
-                    error = ldap_error
+                validation_error = validate_excel(file)
+                if validation_error:
+                    error = validation_error
+                else:
+                    ldap_error, results = compare_excel_to_ad(file)
+                    if ldap_error:
+                        error = ldap_error
             else:
                 error = 'Erreur lors de l\'upload du fichier.'
 
@@ -93,6 +123,7 @@ def upload_file():
 
 @app.route('/')
 def index():
+    """Redirige vers la page de téléchargement."""
     return redirect(url_for('upload_file'))
 
 if __name__ == '__main__':
