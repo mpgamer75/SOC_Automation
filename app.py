@@ -1,14 +1,25 @@
+import os
+import sys
 from flask import Flask, render_template, request, redirect, url_for, flash
 import pandas as pd
-from ldap3 import Server, Connection, ALL, LDAPBindError, LDAPSocketOpenError
+from ldap3 import Server, Connection, LDAPBindError, LDAPSocketOpenError
 from dotenv import load_dotenv
-import os
 from werkzeug.utils import secure_filename
 
 # Charger les variables d'environnement depuis le fichier .env
 load_dotenv()
 
-app = Flask(__name__)
+# Détecter si l'application est exécutée depuis un exécutable PyInstaller
+if getattr(sys, 'frozen', False):
+    # Si l'application est en mode exécutable
+    base_path = sys._MEIPASS
+    template_folder = os.path.join(base_path, 'templates')
+    static_folder = os.path.join(base_path, 'static')
+    app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
+else:
+    # Si l'application est en mode développement
+    app = Flask(__name__)
+
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER', 'uploads')
 app.config['ALLOWED_EXTENSIONS'] = {'xlsx', 'xls', 'csv'}
