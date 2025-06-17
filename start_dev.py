@@ -58,7 +58,7 @@ class DevServer:
                 return False
         
         # Verifica dependencias del frontend
-        frontend_dir = Path(__file__).parent / "frontend"
+        frontend_dir = Path(__file__).parent / "frontend2"
         if not (frontend_dir / "node_modules").exists():
             print("📦 Instalando dependencias de Node.js...")
             try:
@@ -92,7 +92,7 @@ class DevServer:
     def start_frontend(self):
         """Inicia el servidor frontend en modo desarrollo"""
         print("🚀 Iniciando frontend (modo desarrollo)...")
-        frontend_dir = Path(__file__).parent / "frontend"
+        frontend_dir = Path(__file__).parent / "frontend2"
         os.chdir(frontend_dir)
         
         try:

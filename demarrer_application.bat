@@ -34,9 +34,9 @@ echo Python y Node.js detectados correctamente
 echo.
 
 :: Verifica si las dependencias estan instaladas
-if not exist "frontend\node_modules" (
+if not exist "frontend2\node_modules" (
     echo Instalando dependencias del frontend...
-    cd frontend
+    cd frontend2
     call npm install
     if errorlevel 1 (
         echo Error al instalar dependencias del frontend
@@ -105,7 +105,7 @@ goto end
 echo.
 echo Iniciando solo el frontend...
 echo.
-cd frontend
+cd frontend2
 call npm run dev
 goto end
 
@@ -127,7 +127,7 @@ cd ..
 
 :: Instala dependencias del frontend
 echo Instalando dependencias del frontend...
-cd frontend
+cd frontend2
 call npm install
 if errorlevel 1 (
     echo Error al instalar dependencias del frontend

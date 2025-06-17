@@ -72,7 +72,7 @@ class ProductionServer:
     def start_frontend(self):
         """Inicia el servidor frontend"""
         print("🚀 Iniciando frontend...")
-        frontend_dir = Path(__file__).parent / "frontend"
+        frontend_dir = Path(__file__).parent / "frontend2"
         os.chdir(frontend_dir)
         
         try:

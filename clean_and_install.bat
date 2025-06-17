@@ -13,7 +13,7 @@ echo.
 
 :: Limpia el frontend
 echo Limpiando frontend...
-cd frontend
+cd frontend2
 if exist node_modules rmdir /s /q node_modules
 if exist .next rmdir /s /q .next
 if exist package-lock.json del package-lock.json
@@ -33,7 +33,7 @@ echo.
 
 :: Instala dependencias del frontend
 echo Instalando dependencias de Node.js...
-cd frontend
+cd frontend2
 call npm install
 if errorlevel 1 (
     echo ERROR: No se pudieron instalar las dependencias de Node.js

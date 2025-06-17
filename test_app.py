@@ -48,7 +48,7 @@ def test_frontend():
     
     try:
         # Verifica que los archivos necesarios existen
-        frontend_dir = Path(__file__).parent / "frontend"
+        frontend_dir = Path(__file__).parent / "frontend2"
         required_files = ["package.json", "next.config.ts"]
         
         for file in required_files:
