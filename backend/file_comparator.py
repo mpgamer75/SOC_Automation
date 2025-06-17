@@ -232,4 +232,4 @@ class FileComparator:
             return result
             
         except Exception as e:
-            raise ValueError(f"Error en la comparación: {str(e)}")
+            raise ValueError(f"Error en la comparación: {str(e)}") 

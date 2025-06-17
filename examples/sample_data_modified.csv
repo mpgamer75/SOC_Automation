@@ -1,0 +1,12 @@
+ID,Nombre,Email,Departamento,Salario,Estado
+1,Juan Pérez,juan.perez@empresa.com,IT,52000,Activo
+2,María García,maria.garcia@empresa.com,RRHH,45000,Activo
+3,Carlos López,carlos.lopez@empresa.com,Marketing,50000,Activo
+4,Ana Martínez,ana.martinez@empresa.com,IT,52000,Activo
+5,Luis Rodríguez,luis.rodriguez@empresa.com,Ventas,47000,Activo
+6,Sofia Torres,sofia.torres@empresa.com,RRHH,46000,Activo
+7,Pedro Silva,pedro.silva@empresa.com,Marketing,49000,Activo
+8,Carmen Ruiz,carmen.ruiz@empresa.com,IT,51000,Activo
+9,Diego Morales,diego.morales@empresa.com,Ventas,47500,Activo
+10,Laura Jiménez,laura.jimenez@empresa.com,RRHH,45500,Activo
+11,Nuevo Empleado,nuevo@empresa.com,IT,48000,Activo 
