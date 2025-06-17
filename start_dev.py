@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Script de démarrage pour le développement
-Lance le backend et le frontend en mode développement
+Script de inicio para desarrollo
+Lanza el backend y frontend en modo desarrollo
 """
 
 import subprocess
@@ -19,7 +19,7 @@ class DevServer:
         self.running = True
         
     def find_npm(self):
-        """Trouve le chemin de npm"""
+        """Busca la ruta de npm en el sistema"""
         possible_paths = [
             "npm",
             "C:\\Program Files\\nodejs\\npm.cmd",
@@ -33,47 +33,47 @@ class DevServer:
                 result = subprocess.run([path, "--version"], 
                                       capture_output=True, text=True, timeout=5)
                 if result.returncode == 0:
-                    print(f"✅ npm trouvé: {path}")
+                    print(f"✅ npm encontrado: {path}")
                     return path
             except:
                 continue
         
-        raise FileNotFoundError("npm non trouvé. Veuillez installer Node.js et npm.")
+        raise FileNotFoundError("npm no encontrado. Por favor instala Node.js y npm.")
         
     def check_dependencies(self):
-        """Vérifie et installe les dépendances si nécessaire"""
-        print("🔍 Vérification des dépendances...")
+        """Verifica e instala las dependencias si es necesario"""
+        print("🔍 Verificando dependencias...")
         
-        # Vérifier les dépendances du backend
+        # Verifica dependencias del backend
         backend_dir = Path(__file__).parent / "backend"
         if not (backend_dir / "venv").exists():
-            print("📦 Installation des dépendances Python...")
+            print("📦 Instalando dependencias de Python...")
             try:
                 subprocess.run([
                     sys.executable, "-m", "pip", "install", "-r", "requirements.txt"
                 ], cwd=backend_dir, check=True)
-                print("✅ Dépendances Python installées")
+                print("✅ Dependencias de Python instaladas")
             except subprocess.CalledProcessError as e:
-                print(f"❌ Erreur lors de l'installation des dépendances Python: {e}")
+                print(f"❌ Error al instalar dependencias de Python: {e}")
                 return False
         
-        # Vérifier les dépendances du frontend
+        # Verifica dependencias del frontend
         frontend_dir = Path(__file__).parent / "frontend"
         if not (frontend_dir / "node_modules").exists():
-            print("📦 Installation des dépendances Node.js...")
+            print("📦 Instalando dependencias de Node.js...")
             try:
                 npm_path = self.find_npm()
                 subprocess.run([npm_path, "install"], cwd=frontend_dir, check=True)
-                print("✅ Dépendances Node.js installées")
+                print("✅ Dependencias de Node.js instaladas")
             except subprocess.CalledProcessError as e:
-                print(f"❌ Erreur lors de l'installation des dépendances Node.js: {e}")
+                print(f"❌ Error al instalar dependencias de Node.js: {e}")
                 return False
         
         return True
         
     def start_backend(self):
-        """Démarre le serveur backend en mode développement"""
-        print("🚀 Démarrage du backend (mode développement)...")
+        """Inicia el servidor backend en modo desarrollo"""
+        print("🚀 Iniciando backend (modo desarrollo)...")
         backend_dir = Path(__file__).parent / "backend"
         os.chdir(backend_dir)
         
@@ -82,36 +82,36 @@ class DevServer:
                 sys.executable, "main.py"
             ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             
-            print(f"✅ Backend démarré (PID: {self.backend_process.pid})")
-            print("📍 API disponible sur: http://localhost:8000")
+            print(f"✅ Backend iniciado (PID: {self.backend_process.pid})")
+            print("📍 API disponible en: http://localhost:8000")
             
         except Exception as e:
-            print(f"❌ Erreur lors du démarrage du backend: {e}")
+            print(f"❌ Error al iniciar el backend: {e}")
             sys.exit(1)
     
     def start_frontend(self):
-        """Démarre le serveur frontend en mode développement"""
-        print("🚀 Démarrage du frontend (mode développement)...")
+        """Inicia el servidor frontend en modo desarrollo"""
+        print("🚀 Iniciando frontend (modo desarrollo)...")
         frontend_dir = Path(__file__).parent / "frontend"
         os.chdir(frontend_dir)
         
         try:
             npm_path = self.find_npm()
             
-            # Démarrer le serveur de développement
+            # Inicia el servidor de desarrollo
             self.frontend_process = subprocess.Popen([
                 npm_path, "run", "dev"
             ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             
-            print(f"✅ Frontend démarré (PID: {self.frontend_process.pid})")
-            print("📍 Interface disponible sur: http://localhost:3000")
+            print(f"✅ Frontend iniciado (PID: {self.frontend_process.pid})")
+            print("📍 Interfaz disponible en: http://localhost:3000")
             
         except Exception as e:
-            print(f"❌ Erreur lors du démarrage du frontend: {e}")
+            print(f"❌ Error al iniciar el frontend: {e}")
             sys.exit(1)
     
     def monitor_processes(self):
-        """Surveille les processus et affiche les logs"""
+        """Monitorea los procesos y muestra los logs"""
         def monitor_backend():
             if self.backend_process:
                 for line in iter(self.backend_process.stdout.readline, ''):
@@ -131,67 +131,67 @@ class DevServer:
         frontend_thread.start()
     
     def stop_services(self):
-        """Arrête tous les services"""
-        print("\n🛑 Arrêt des services...")
+        """Detiene todos los servicios"""
+        print("\n🛑 Deteniendo servicios...")
         self.running = False
         
         if self.backend_process:
             self.backend_process.terminate()
-            print("✅ Backend arrêté")
+            print("✅ Backend detenido")
         
         if self.frontend_process:
             self.frontend_process.terminate()
-            print("✅ Frontend arrêté")
+            print("✅ Frontend detenido")
     
     def signal_handler(self, signum, frame):
-        """Gestionnaire de signal pour l'arrêt propre"""
-        print(f"\n📡 Signal reçu ({signum}), arrêt en cours...")
+        """Manejador de señales para detencion limpia"""
+        print(f"\n📡 Señal recibida ({signum}), deteniendo...")
         self.stop_services()
         sys.exit(0)
     
     def run(self):
-        """Lance l'application en mode développement"""
+        """Lanza la aplicacion en modo desarrollo"""
         print("=" * 60)
-        print("🔧 ALTICE FILE COMPARATOR - MODE DÉVELOPPEMENT")
+        print("🔧 ALTICE FILE COMPARATOR - MODO DESARROLLO")
         print("=" * 60)
         
         signal.signal(signal.SIGINT, self.signal_handler)
         signal.signal(signal.SIGTERM, self.signal_handler)
         
         try:
-            # Vérifier les dépendances
+            
             if not self.check_dependencies():
-                print("❌ Impossible de vérifier les dépendances")
+                print("❌ No se pudieron verificar las dependencias")
                 sys.exit(1)
             
-            # Démarrer le backend
+            
             self.start_backend()
             time.sleep(3)
             
-            # Démarrer le frontend
+            
             self.start_frontend()
             time.sleep(5)
             
-            # Démarrer la surveillance
+            
             self.monitor_processes()
             
             print("\n" + "=" * 60)
-            print("🎉 APPLICATION WEB DÉMARRÉE EN MODE DÉVELOPPEMENT!")
+            print("🎉 ¡APLICACION WEB INICIADA EN MODO DESARROLLO!")
             print("=" * 60)
             print("🌐 Frontend: http://localhost:3000")
             print("🔧 Backend API: http://localhost:8000")
-            print("📚 Documentation API: http://localhost:8000/docs")
+            print("📚 Documentacion API: http://localhost:8000/docs")
             print("=" * 60)
-            print("💡 Appuyez sur Ctrl+C pour arrêter l'application")
+            print("💡 Presiona Ctrl+C para detener la aplicacion")
             print("=" * 60)
             
             while self.running:
                 time.sleep(1)
                 
         except KeyboardInterrupt:
-            print("\n📡 Arrêt demandé par l'utilisateur...")
+            print("\n📡 Detencion solicitada por el usuario...")
         except Exception as e:
-            print(f"❌ Erreur inattendue: {e}")
+            print(f"❌ Error inesperado: {e}")
         finally:
             self.stop_services()
 

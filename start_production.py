@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Script de démarrage pour la production
-Lance le backend et le frontend en parallèle
+Script de inicio para produccion
+Lanza el backend y frontend en paralelo para produccion
 """
 
 import subprocess
@@ -19,8 +19,8 @@ class ProductionServer:
         self.running = True
         
     def find_npm(self):
-        """Trouve le chemin de npm"""
-        # Essayer plusieurs chemins possibles
+        """Busca la ruta de npm en el sistema"""
+        # Proba varias rutas posibles
         possible_paths = [
             "npm",
             "C:\\Program Files\\nodejs\\npm.cmd",
@@ -34,26 +34,26 @@ class ProductionServer:
                 result = subprocess.run([path, "--version"], 
                                       capture_output=True, text=True, timeout=5)
                 if result.returncode == 0:
-                    print(f"✅ npm trouvé: {path}")
+                    print(f"✅ npm encontrado: {path}")
                     return path
             except:
                 continue
         
-        # Si npm n'est pas trouvé, essayer avec node
+        # Si npm no se encuentra, intentar con node
         try:
             result = subprocess.run(["node", "--version"], 
                                   capture_output=True, text=True, timeout=5)
             if result.returncode == 0:
-                print("⚠️ npm non trouvé, utilisation de npx...")
+                print("⚠️ npm no encontrado, usando npx...")
                 return "npx"
         except:
             pass
         
-        raise FileNotFoundError("npm non trouvé. Veuillez installer Node.js et npm.")
+        raise FileNotFoundError("npm no encontrado. Por favor instala Node.js y npm.")
         
     def start_backend(self):
-        """Démarre le serveur backend"""
-        print("🚀 Démarrage du backend...")
+        """Inicia el servidor backend"""
+        print("🚀 Iniciando backend...")
         backend_dir = Path(__file__).parent / "backend"
         os.chdir(backend_dir)
         
@@ -62,49 +62,49 @@ class ProductionServer:
                 sys.executable, "main.py"
             ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             
-            print(f"✅ Backend démarré (PID: {self.backend_process.pid})")
-            print("📍 API disponible sur: http://localhost:8000")
+            print(f"✅ Backend iniciado (PID: {self.backend_process.pid})")
+            print("📍 API disponible en: http://localhost:8000")
             
         except Exception as e:
-            print(f"❌ Erreur lors du démarrage du backend: {e}")
+            print(f"❌ Error al iniciar el backend: {e}")
             sys.exit(1)
     
     def start_frontend(self):
-        """Démarre le serveur frontend"""
-        print("🚀 Démarrage du frontend...")
+        """Inicia el servidor frontend"""
+        print("🚀 Iniciando frontend...")
         frontend_dir = Path(__file__).parent / "frontend"
         os.chdir(frontend_dir)
         
         try:
-            # Trouver npm
+            
             npm_path = self.find_npm()
             
-            # Build pour la production d'abord
-            print("📦 Build du frontend pour la production...")
+            # Build para produccion primero
+            print("📦 Construyendo frontend para produccion...")
             build_process = subprocess.run([
                 npm_path, "run", "build"
             ], capture_output=True, text=True, timeout=120)
             
             if build_process.returncode != 0:
-                print(f"❌ Erreur lors du build: {build_process.stderr}")
+                print(f"❌ Error durante la construccion: {build_process.stderr}")
                 sys.exit(1)
             
-            print("✅ Build terminé avec succès")
+            print("✅ Construccion completada exitosamente")
             
-            # Démarrer le serveur de production
+            # Inicia el servidor de produccion
             self.frontend_process = subprocess.Popen([
                 npm_path, "run", "start"
             ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             
-            print(f"✅ Frontend démarré (PID: {self.frontend_process.pid})")
-            print("📍 Interface disponible sur: http://localhost:3000")
+            print(f"✅ Frontend iniciado (PID: {self.frontend_process.pid})")
+            print("📍 Interfaz disponible en: http://localhost:3000")
             
         except Exception as e:
-            print(f"❌ Erreur lors du démarrage du frontend: {e}")
+            print(f"❌ Error al iniciar el frontend: {e}")
             sys.exit(1)
     
     def monitor_processes(self):
-        """Surveille les processus et affiche les logs"""
+        """Monitorea los procesos y muestra los logs"""
         def monitor_backend():
             if self.backend_process:
                 for line in iter(self.backend_process.stdout.readline, ''):
@@ -117,7 +117,7 @@ class ProductionServer:
                     if line:
                         print(f"[FRONTEND] {line.strip()}")
         
-        # Démarrer les threads de surveillance
+        # Inicia los hilos de monitoreo
         backend_thread = threading.Thread(target=monitor_backend, daemon=True)
         frontend_thread = threading.Thread(target=monitor_frontend, daemon=True)
         
@@ -125,64 +125,64 @@ class ProductionServer:
         frontend_thread.start()
     
     def stop_services(self):
-        """Arrête tous les services"""
-        print("\n🛑 Arrêt des services...")
+        """Detiene todos los servicios"""
+        print("\n🛑 Deteniendo servicios...")
         self.running = False
         
         if self.backend_process:
             self.backend_process.terminate()
-            print("✅ Backend arrêté")
+            print("✅ Backend detenido")
         
         if self.frontend_process:
             self.frontend_process.terminate()
-            print("✅ Frontend arrêté")
+            print("✅ Frontend detenido")
     
     def signal_handler(self, signum, frame):
-        """Gestionnaire de signal pour l'arrêt propre"""
-        print(f"\n📡 Signal reçu ({signum}), arrêt en cours...")
+        """Manejador de señales para detencion limpia"""
+        print(f"\n📡 Señal recibida ({signum}), deteniendo...")
         self.stop_services()
         sys.exit(0)
     
     def run(self):
-        """Lance l'application complète"""
+        """Lanza la aplicacion completa"""
         print("=" * 60)
-        print("🎯 ALTICE FILE COMPARATOR - SERVEUR DE PRODUCTION")
+        print("🎯 ALTICE FILE COMPARATOR - SERVIDOR DE PRODUCCION")
         print("=" * 60)
         
-        # Configuration des gestionnaires de signal
+        # Configuracion de los manejadores de señal
         signal.signal(signal.SIGINT, self.signal_handler)
         signal.signal(signal.SIGTERM, self.signal_handler)
         
         try:
-            # Démarrer le backend
+            
             self.start_backend()
-            time.sleep(3)  # Attendre que le backend soit prêt
+            time.sleep(3)  # Espera a que el backend este listo
             
-            # Démarrer le frontend
+            
             self.start_frontend()
-            time.sleep(5)  # Attendre que le frontend soit prêt
+            time.sleep(5)  # Espera a que el frontend este listo
             
-            # Démarrer la surveillance
+            
             self.monitor_processes()
             
             print("\n" + "=" * 60)
-            print("🎉 APPLICATION WEB DÉMARRÉE AVEC SUCCÈS!")
+            print("🎉 ¡APLICACION WEB INICIADA EXITOSAMENTE!")
             print("=" * 60)
             print("🌐 Frontend: http://localhost:3000")
             print("🔧 Backend API: http://localhost:8000")
-            print("📚 Documentation API: http://localhost:8000/docs")
+            print("📚 Documentacion API: http://localhost:8000/docs")
             print("=" * 60)
-            print("💡 Appuyez sur Ctrl+C pour arrêter l'application")
+            print("💡 Presiona Ctrl+C para detener la aplicacion")
             print("=" * 60)
             
-            # Maintenir l'application en vie
+            # Mantiene la aplicacion activa
             while self.running:
                 time.sleep(1)
                 
         except KeyboardInterrupt:
-            print("\n📡 Arrêt demandé par l'utilisateur...")
+            print("\n📡 Detencion solicitada por el usuario...")
         except Exception as e:
-            print(f"❌ Erreur inattendue: {e}")
+            print(f"❌ Error inesperado: {e}")
         finally:
             self.stop_services()
 

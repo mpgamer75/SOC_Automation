@@ -6,8 +6,8 @@ from datetime import datetime
 
 class FileComparator:
     """
-    Clase para comparar diferentes tipos de archivos (CSV, Excel)
-    Detecta diferencias y genera reportes detallados
+    Motor principal para comparar archivos CSV y Excel
+    Analiza diferencias estructurales y de contenido entre documentos
     """
     
     def __init__(self):
@@ -15,13 +15,13 @@ class FileComparator:
     
     def read_file(self, file_content: bytes, filename: str) -> pd.DataFrame:
         """
-        Lee un archivo y retorna un DataFrame de pandas
+        Procesa y carga un archivo en memoria, manejando diferentes codificaciones
         """
         file_extension = filename.lower().split('.')[-1]
         
         try:
             if file_extension == 'csv':
-                # Intentar diferentes encodings para CSV
+                # Probar diferentes codificaciones para archivos CSV
                 for encoding in ['utf-8', 'latin-1', 'cp1252']:
                     try:
                         df = pd.read_csv(io.BytesIO(file_content), encoding=encoding)
@@ -41,31 +41,30 @@ class FileComparator:
     
     def _extract_different_content(self, df1: pd.DataFrame, df2: pd.DataFrame) -> Dict[str, Any]:
         """
-        Extrae el contenido que diferencia los dos documentos
-        Retorna elementos únicos en cada archivo
+        Identifica y extrae el contenido que hace únicos a cada documento
+        Encuentra registros que solo existen en uno de los archivos
         """
-        # Convertir a string para comparación
+        # Normalizar datos como strings para comparación consistente
         df1_str = df1.astype(str)
         df2_str = df2.astype(str)
         
-        # Obtener columnas comunes
+        # Buscar columnas que comparten ambos archivos
         common_cols = list(set(df1.columns) & set(df2.columns))
         
-        # Elementos únicos en el archivo de referencia (df1)
+        # Preparar listas para almacenar elementos únicos
         unique_in_reference = []
-        # Elementos únicos en el archivo a comparar (df2)
         unique_in_compare = []
         
         if common_cols:
-            # Crear una clave única para cada fila basada en las columnas comunes
+            # Generar claves únicas basadas en las columnas compartidas
             df1_key = df1_str[common_cols].apply(lambda x: '|'.join(x), axis=1)
             df2_key = df2_str[common_cols].apply(lambda x: '|'.join(x), axis=1)
             
-            # Encontrar filas únicas en cada DataFrame
+            # Encontrar registros que solo existen en cada archivo
             df1_unique_keys = set(df1_key) - set(df2_key)
             df2_unique_keys = set(df2_key) - set(df1_key)
             
-            # Extraer las filas únicas
+            # Extraer los datos completos de los registros únicos
             for key in df1_unique_keys:
                 row_idx = df1_key[df1_key == key].index[0]
                 unique_in_reference.append({
@@ -82,13 +81,13 @@ class FileComparator:
                     'key_columns': common_cols
                 })
         
-        # Analizar columnas únicas
+        # Identificar columnas que solo existen en cada archivo
         cols_only_in_reference = list(set(df1.columns) - set(df2.columns))
         cols_only_in_compare = list(set(df2.columns) - set(df1.columns))
         
         return {
-            'unique_in_reference': unique_in_reference[:50],  # Limitar para el frontend
-            'unique_in_compare': unique_in_compare[:50],      # Limitar para el frontend
+            'unique_in_reference': unique_in_reference[:50],  # Limitar para evitar sobrecarga en el frontend
+            'unique_in_compare': unique_in_compare[:50],      # Limitar para evitar sobrecarga en el frontend
             'columns_only_in_reference': cols_only_in_reference,
             'columns_only_in_compare': cols_only_in_compare,
             'total_unique_in_reference': len(unique_in_reference),
@@ -98,42 +97,43 @@ class FileComparator:
     def compare_dataframes(self, df1: pd.DataFrame, df2: pd.DataFrame, 
                           ref_filename: str, comp_filename: str) -> Dict[str, Any]:
         """
-        Compara dos DataFrames y retorna un diccionario con las diferencias
+        Ejecuta la comparación completa entre dos DataFrames
+        Retorna un reporte detallado con todas las diferencias encontradas
         """
         start_time = datetime.now()
         
-        # Limpiar nombres de columnas (eliminar espacios)
+        # Limpiar nombres de columnas para evitar problemas de espacios
         df1.columns = df1.columns.str.strip()
         df2.columns = df2.columns.str.strip()
         
-        # Convertir a string para evitar problemas de tipos
+        # Convertir todo a string para comparación uniforme
         df1 = df1.astype(str)
         df2 = df2.astype(str)
         
         differences = []
         
-        # Comparar estructura
+        # Primero analizar la estructura de los archivos
         struct_diff = self._compare_structure(df1, df2)
         differences.extend(struct_diff)
         
-        # Comparar contenido si tienen la misma estructura básica
-        if not struct_diff:  # Solo si no hay diferencias estructurales
+        # Si la estructura es compatible, analizar el contenido
+        if not struct_diff:  # Solo proceder si no hay diferencias estructurales críticas
             content_diff = self._compare_content(df1, df2)
             differences.extend(content_diff)
         
-        # Extraer contenido que diferencia los documentos
+        # Extraer el contenido que diferencia los documentos
         different_content = self._extract_different_content(df1, df2)
         
-        # Estadísticas
+        # Generar estadísticas del análisis
         summary = self._generate_summary(df1, df2, differences, different_content)
         
-        # Tiempo de procesamiento
+        # Calcular tiempo total de procesamiento
         processing_time = (datetime.now() - start_time).total_seconds()
         
         return {
             "identical": len(differences) == 0,
             "summary": summary,
-            "differences": differences[:100],  # Limitar a 100 diferencias para el frontend
+            "differences": differences[:100],  # Limitar para evitar sobrecarga en el frontend
             "different_content": different_content,
             "metadata": {
                 "comparisonDate": datetime.now().isoformat(),
@@ -145,11 +145,12 @@ class FileComparator:
     
     def _compare_structure(self, df1: pd.DataFrame, df2: pd.DataFrame) -> List[Dict[str, Any]]:
         """
-        Compara la estructura de los DataFrames (columnas, dimensiones)
+        Analiza las diferencias estructurales entre los archivos
+        Compara columnas, dimensiones y organización de datos
         """
         differences = []
         
-        # Comparar número de columnas
+        # Verificar si el número de columnas coincide
         if len(df1.columns) != len(df2.columns):
             differences.append({
                 "type": "structure_difference",
@@ -159,13 +160,14 @@ class FileComparator:
                 "compareValue": f"{len(df2.columns)} columnas"
             })
         
-        # Comparar nombres de columnas
+        # Comparar nombres específicos de columnas
         cols1 = set(df1.columns)
         cols2 = set(df2.columns)
         
         missing_cols = cols1 - cols2
         extra_cols = cols2 - cols1
         
+        # Registrar columnas que faltan en el archivo de comparación
         for col in missing_cols:
             differences.append({
                 "type": "column_missing",
@@ -175,6 +177,7 @@ class FileComparator:
                 "compareValue": "Columna faltante"
             })
         
+        # Registrar columnas nuevas en el archivo de comparación
         for col in extra_cols:
             differences.append({
                 "type": "column_added",
@@ -188,18 +191,19 @@ class FileComparator:
     
     def _compare_content(self, df1: pd.DataFrame, df2: pd.DataFrame) -> List[Dict[str, Any]]:
         """
-        Compara el contenido de los DataFrames celda por celda
+        Compara el contenido celda por celda entre los archivos
+        Identifica valores modificados, filas agregadas o eliminadas
         """
         differences = []
         
-        # Obtener columnas comunes
+        # Obtener columnas que existen en ambos archivos
         common_cols = list(set(df1.columns) & set(df2.columns))
         
-        # Comparar número de filas
+        # Determinar rangos de comparación
         max_rows = max(len(df1), len(df2))
         min_rows = min(len(df1), len(df2))
         
-        # Comparar contenido de celdas
+        # Comparar cada celda en las filas comunes
         for i in range(min_rows):
             for col in common_cols:
                 val1 = df1.iloc[i][col] if i < len(df1) else "N/A"
@@ -215,7 +219,7 @@ class FileComparator:
                         "compareValue": str(val2)
                     })
         
-        # Filas adicionales en df2
+        # Identificar filas nuevas en el archivo de comparación
         if len(df2) > len(df1):
             for i in range(len(df1), len(df2)):
                 row_data = {}
@@ -231,7 +235,7 @@ class FileComparator:
                     "description": f"Fila {i+1} agregada en archivo a comparar"
                 })
         
-        # Filas faltantes en df2
+        # Identificar filas que faltan en el archivo de comparación
         elif len(df1) > len(df2):
             for i in range(len(df2), len(df1)):
                 row_data = {}
@@ -253,9 +257,10 @@ class FileComparator:
                          differences: List[Dict[str, Any]], 
                          different_content: Dict[str, Any]) -> Dict[str, int]:
         """
-        Genera un resumen estadístico de las diferencias
+        Genera estadísticas resumidas del análisis de comparación
+        Cuenta diferentes tipos de diferencias encontradas
         """
-        # Contar tipos de diferencias
+        # Contar cada tipo de diferencia encontrada
         cell_modifications = len([d for d in differences if d["type"] == "cell_modified"])
         rows_added = len([d for d in differences if d["type"] == "row_added"])
         rows_removed = len([d for d in differences if d["type"] == "row_removed"])
@@ -282,14 +287,15 @@ class FileComparator:
     def compare_files(self, file1_content: bytes, file1_name: str, 
                      file2_content: bytes, file2_name: str) -> Dict[str, Any]:
         """
-        Método principal para comparar dos archivos
+        Punto de entrada principal para comparar dos archivos
+        Coordina todo el proceso de análisis y comparación
         """
         try:
-            # Leer los archivos
+            # Cargar ambos archivos en memoria
             df1 = self.read_file(file1_content, file1_name)
             df2 = self.read_file(file2_content, file2_name)
             
-            # Comparar los DataFrames
+            # Ejecutar la comparación completa
             result = self.compare_dataframes(df1, df2, file1_name, file2_name)
             
             return result

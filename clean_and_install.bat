@@ -1,26 +1,26 @@
 @echo off
 chcp 65001 >nul
-title Nettoyage et Installation - Altice File Comparator
+title Limpieza e Instalacion - Altice File Comparator
 
 echo.
 echo ============================================================
-echo NETTOYAGE ET INSTALLATION - ALTICE FILE COMPARATOR
+echo LIMPIEZA E INSTALACION - ALTICE FILE COMPARATOR
 echo ============================================================
 echo.
 
-echo Nettoyage des anciennes installations...
+echo Limpiando instalaciones anteriores...
 echo.
 
-:: Nettoyer le frontend
-echo Nettoyage du frontend...
+:: Limpia el frontend
+echo Limpiando frontend...
 cd frontend
 if exist node_modules rmdir /s /q node_modules
 if exist .next rmdir /s /q .next
 if exist package-lock.json del package-lock.json
 cd ..
 
-:: Nettoyer le backend
-echo Nettoyage du backend...
+:: Limpia el backend
+echo Limpiando backend...
 cd backend
 if exist __pycache__ rmdir /s /q __pycache__
 if exist venv rmdir /s /q venv
@@ -28,26 +28,26 @@ if exist *.log del *.log
 cd ..
 
 echo.
-echo Installation des dependances...
+echo Instalando dependencias...
 echo.
 
-:: Installer les dependances du frontend
-echo Installation des dependances Node.js...
+:: Instala dependencias del frontend
+echo Instalando dependencias de Node.js...
 cd frontend
 call npm install
 if errorlevel 1 (
-    echo ERREUR: Impossible d'installer les dependances Node.js
+    echo ERROR: No se pudieron instalar las dependencias de Node.js
     pause
     exit /b 1
 )
 cd ..
 
-:: Installer les dependances du backend
-echo Installation des dependances Python...
+:: Instala dependencias del backend
+echo Instalando dependencias de Python...
 cd backend
 call pip install -r requirements.txt
 if errorlevel 1 (
-    echo ERREUR: Impossible d'installer les dependances Python
+    echo ERROR: No se pudieron instalar las dependencias de Python
     pause
     exit /b 1
 )
@@ -55,11 +55,11 @@ cd ..
 
 echo.
 echo ============================================================
-echo INSTALLATION TERMINEE AVEC SUCCES!
+echo ¡INSTALACION COMPLETADA EXITOSAMENTE!
 echo ============================================================
 echo.
-echo Vous pouvez maintenant lancer l'application avec:
+echo Ahora puedes iniciar la aplicacion con:
 echo - demarrer_application.bat
-echo - ou python start_dev.py
+echo - o python start_dev.py
 echo.
 pause 

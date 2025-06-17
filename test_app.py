@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script de test pour vérifier que l'application fonctionne correctement
+Script de prueba para verificar que la aplicacion funciona correctamente
 """
 
 import os
@@ -11,125 +11,125 @@ import requests
 from pathlib import Path
 
 def test_backend():
-    """Teste le backend"""
-    print("🔧 Test du backend...")
+    """Prueba el backend de la aplicacion"""
+    print("🔧 Probando backend...")
     
     try:
-        # Vérifier que les fichiers existent
+        # Verifica que los archivos necesarios existen
         backend_dir = Path(__file__).parent / "backend"
         required_files = ["main.py", "file_comparator.py", "config.py", "requirements.txt"]
         
         for file in required_files:
             if not (backend_dir / file).exists():
-                print(f"❌ Fichier manquant: {file}")
+                print(f"❌ Archivo faltante: {file}")
                 return False
         
-        print("✅ Tous les fichiers backend sont présents")
+        print("✅ Todos los archivos del backend estan presentes")
         
-        # Vérifier les dépendances
+        # Verifica las dependencias de Python
         try:
             import fastapi
             import pandas
             import uvicorn
-            print("✅ Toutes les dépendances Python sont installées")
+            print("✅ Todas las dependencias de Python estan instaladas")
         except ImportError as e:
-            print(f"❌ Dépendance manquante: {e}")
+            print(f"❌ Dependencia faltante: {e}")
             return False
         
         return True
         
     except Exception as e:
-        print(f"❌ Erreur lors du test du backend: {e}")
+        print(f"❌ Error durante la prueba del backend: {e}")
         return False
 
 def test_frontend():
-    """Teste le frontend"""
-    print("🌐 Test du frontend...")
+    """Prueba el frontend de la aplicacion"""
+    print("🌐 Probando frontend...")
     
     try:
-        # Vérifier que les fichiers existent
+        # Verifica que los archivos necesarios existen
         frontend_dir = Path(__file__).parent / "frontend"
         required_files = ["package.json", "next.config.ts"]
         
         for file in required_files:
             if not (frontend_dir / file).exists():
-                print(f"❌ Fichier manquant: {file}")
+                print(f"❌ Archivo faltante: {file}")
                 return False
         
-        # Vérifier que le composant principal existe
+        # Verifica que el componente principal existe
         component_file = frontend_dir / "src" / "components" / "FileComparatorDashboard.tsx"
         if not component_file.exists():
-            print("❌ Composant principal manquant")
+            print("❌ Componente principal faltante")
             return False
         
-        print("✅ Tous les fichiers frontend sont présents")
+        print("✅ Todos los archivos del frontend estan presentes")
         
-        # Vérifier Node.js et npm
+        # Verifica Node.js y npm
         try:
             result = subprocess.run(["node", "--version"], 
                                   capture_output=True, text=True, timeout=5)
             if result.returncode == 0:
-                print(f"✅ Node.js détecté: {result.stdout.strip()}")
+                print(f"✅ Node.js detectado: {result.stdout.strip()}")
             else:
-                print("❌ Node.js non trouvé")
+                print("❌ Node.js no encontrado")
                 return False
         except:
-            print("❌ Node.js non trouvé")
+            print("❌ Node.js no encontrado")
             return False
         
         return True
         
     except Exception as e:
-        print(f"❌ Erreur lors du test du frontend: {e}")
+        print(f"❌ Error durante la prueba del frontend: {e}")
         return False
 
 def test_scripts():
-    """Teste les scripts de démarrage"""
-    print("📜 Test des scripts...")
+    """Prueba los scripts de inicio"""
+    print("📜 Probando scripts...")
     
     try:
         scripts = ["start_dev.py", "start_production.py", "demarrer_application.bat"]
         
         for script in scripts:
             if not (Path(__file__).parent / script).exists():
-                print(f"❌ Script manquant: {script}")
+                print(f"❌ Script faltante: {script}")
                 return False
         
-        print("✅ Tous les scripts sont présents")
+        print("✅ Todos los scripts estan presentes")
         return True
         
     except Exception as e:
-        print(f"❌ Erreur lors du test des scripts: {e}")
+        print(f"❌ Error durante la prueba de scripts: {e}")
         return False
 
 def test_examples():
-    """Teste les fichiers d'exemple"""
-    print("📁 Test des fichiers d'exemple...")
+    """Prueba los archivos de ejemplo"""
+    print("📁 Probando archivos de ejemplo...")
     
     try:
         examples_dir = Path(__file__).parent / "examples"
         if not examples_dir.exists():
-            print("❌ Dossier examples manquant")
+            print("❌ Carpeta examples faltante")
             return False
         
-        example_files = ["sample_data.csv", "sample_data_modified.csv"]
+        example_files = ["maquinas_referencia.csv", "maquinas_nuevas.csv"]
         
         for file in example_files:
             if not (examples_dir / file).exists():
-                print(f"❌ Fichier d'exemple manquant: {file}")
+                print(f"❌ Archivo de ejemplo faltante: {file}")
                 return False
         
-        print("✅ Tous les fichiers d'exemple sont présents")
+        print("✅ Todos los archivos de ejemplo estan presentes")
         return True
         
     except Exception as e:
-        print(f"❌ Erreur lors du test des exemples: {e}")
+        print(f"❌ Error durante la prueba de ejemplos: {e}")
         return False
 
 def main():
-    """Fonction principale de test"""
+    """Funcion principal de pruebas"""
     print("=" * 60)
-    print("🧪 TEST DE L'APPLICATION ALTICE FILE COMPARATOR")
+    print("🧪 PRUEBA DE LA APLICACION ALTICE FILE COMPARATOR")
     print("=" * 60)
     print()
     
@@ -137,42 +137,42 @@ def main():
         ("Backend", test_backend),
         ("Frontend", test_frontend),
         ("Scripts", test_scripts),
-        ("Exemples", test_examples)
+        ("Ejemplos", test_examples)
     ]
     
     results = []
     
     for test_name, test_func in tests:
-        print(f"🔍 Test: {test_name}")
+        print(f"🔍 Prueba: {test_name}")
         result = test_func()
         results.append((test_name, result))
         print()
     
-    # Résumé
+    # Resumen de resultados
     print("=" * 60)
-    print("📊 RÉSUMÉ DES TESTS")
+    print("📊 RESUMEN DE PRUEBAS")
     print("=" * 60)
     
     passed = 0
     total = len(results)
     
     for test_name, result in results:
-        status = "✅ PASSÉ" if result else "❌ ÉCHOUÉ"
+        status = "✅ EXITOSO" if result else "❌ FALLIDO"
         print(f"{test_name}: {status}")
         if result:
             passed += 1
     
     print()
-    print(f"Résultat: {passed}/{total} tests passés")
+    print(f"Resultado: {passed}/{total} pruebas exitosas")
     
     if passed == total:
-        print("🎉 Tous les tests sont passés ! L'application est prête.")
+        print("🎉 ¡Todas las pruebas fueron exitosas! La aplicacion esta lista.")
         print()
-        print("🚀 Pour démarrer l'application:")
-        print("   - Double-cliquez sur 'demarrer_application.bat'")
-        print("   - Ou exécutez: python start_dev.py")
+        print("🚀 Para iniciar la aplicacion:")
+        print("   - Haz doble clic en 'demarrer_application.bat'")
+        print("   - O ejecuta: python start_dev.py")
     else:
-        print("⚠️ Certains tests ont échoué. Vérifiez les erreurs ci-dessus.")
+        print("⚠️ Algunas pruebas fallaron. Revisa los errores anteriores.")
     
     print("=" * 60)
 

@@ -8,7 +8,7 @@ echo ALTICE FILE COMPARATOR - LANZADOR DE APLICACION
 echo ============================================================
 echo.
 
-:: Verificar si Python esta instalado
+:: Verifica si Python esta instalado
 python --version >nul 2>&1
 if errorlevel 1 (
     echo ERROR: Python no esta instalado o no esta en el PATH
@@ -19,7 +19,7 @@ if errorlevel 1 (
     exit /b 1
 )
 
-:: Verificar si Node.js esta instalado
+:: Verifica si Node.js esta instalado
 node --version >nul 2>&1
 if errorlevel 1 (
     echo ERROR: Node.js no esta instalado o no esta en el PATH
@@ -33,7 +33,7 @@ if errorlevel 1 (
 echo Python y Node.js detectados correctamente
 echo.
 
-:: Verificar si las dependencias estan instaladas
+:: Verifica si las dependencias estan instaladas
 if not exist "frontend\node_modules" (
     echo Instalando dependencias del frontend...
     cd frontend
@@ -58,7 +58,7 @@ if not exist "backend\venv" (
     cd ..
 )
 
-:: Mostrar menu de opciones
+:: menu de opciones
 echo Seleccione el modo de ejecucion:
 echo.
 echo 1. Modo Desarrollo (recomendado para desarrollo)
@@ -114,7 +114,7 @@ echo.
 echo Instalando dependencias...
 echo.
 
-:: Instalar dependencias del backend
+:: Instala dependencias del backend
 echo Instalando dependencias del backend...
 cd backend
 call pip install -r requirements.txt
@@ -125,7 +125,7 @@ if errorlevel 1 (
 )
 cd ..
 
-:: Instalar dependencias del frontend
+:: Instala dependencias del frontend
 echo Instalando dependencias del frontend...
 cd frontend
 call npm install
