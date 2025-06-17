@@ -14,3 +14,11 @@
 2025-06-17 10:27:08,741 - __main__ - INFO - Comparación completada: 0 diferencias encontradas
 2025-06-17 11:02:29,047 - __main__ - INFO - Comparando archivos: maquinas_referencia.csv vs maquinas_nuevas.csv
 2025-06-17 11:02:29,055 - __main__ - INFO - Comparación completada: 2 diferencias encontradas
+2025-06-17 14:37:45,730 - __main__ - INFO - Iniciando servidor en 0.0.0.0:8000
+2025-06-17 14:37:45,731 - __main__ - INFO - Ambiente: production
+2025-06-17 14:37:45,731 - __main__ - INFO - URL del Frontend: http://localhost:3000
+2025-06-17 14:54:16,123 - __main__ - INFO - Iniciando servidor en 0.0.0.0:8000
+2025-06-17 14:54:16,123 - __main__ - INFO - Ambiente: production
+2025-06-17 14:54:16,123 - __main__ - INFO - URL del Frontend: http://localhost:3000
+2025-06-17 14:55:04,236 - __main__ - INFO - Comparando archivos: maquinas_referencia.csv vs maquinas_nuevas.csv
+2025-06-17 14:55:04,276 - __main__ - INFO - Comparación completada: 2 diferencias encontradas
