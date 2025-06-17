@@ -40,6 +40,37 @@ class DevServer:
         
         raise FileNotFoundError("npm non trouvé. Veuillez installer Node.js et npm.")
         
+    def check_dependencies(self):
+        """Vérifie et installe les dépendances si nécessaire"""
+        print("🔍 Vérification des dépendances...")
+        
+        # Vérifier les dépendances du backend
+        backend_dir = Path(__file__).parent / "backend"
+        if not (backend_dir / "venv").exists():
+            print("📦 Installation des dépendances Python...")
+            try:
+                subprocess.run([
+                    sys.executable, "-m", "pip", "install", "-r", "requirements.txt"
+                ], cwd=backend_dir, check=True)
+                print("✅ Dépendances Python installées")
+            except subprocess.CalledProcessError as e:
+                print(f"❌ Erreur lors de l'installation des dépendances Python: {e}")
+                return False
+        
+        # Vérifier les dépendances du frontend
+        frontend_dir = Path(__file__).parent / "frontend"
+        if not (frontend_dir / "node_modules").exists():
+            print("📦 Installation des dépendances Node.js...")
+            try:
+                npm_path = self.find_npm()
+                subprocess.run([npm_path, "install"], cwd=frontend_dir, check=True)
+                print("✅ Dépendances Node.js installées")
+            except subprocess.CalledProcessError as e:
+                print(f"❌ Erreur lors de l'installation des dépendances Node.js: {e}")
+                return False
+        
+        return True
+        
     def start_backend(self):
         """Démarre le serveur backend en mode développement"""
         print("🚀 Démarrage du backend (mode développement)...")
@@ -66,15 +97,6 @@ class DevServer:
         
         try:
             npm_path = self.find_npm()
-            
-            # Installer les dépendances si nécessaire
-            print("📦 Vérification des dépendances...")
-            install_process = subprocess.run([
-                npm_path, "install"
-            ], capture_output=True, text=True, timeout=60)
-            
-            if install_process.returncode != 0:
-                print(f"⚠️ Erreur lors de l'installation: {install_process.stderr}")
             
             # Démarrer le serveur de développement
             self.frontend_process = subprocess.Popen([
@@ -137,12 +159,20 @@ class DevServer:
         signal.signal(signal.SIGTERM, self.signal_handler)
         
         try:
+            # Vérifier les dépendances
+            if not self.check_dependencies():
+                print("❌ Impossible de vérifier les dépendances")
+                sys.exit(1)
+            
+            # Démarrer le backend
             self.start_backend()
             time.sleep(3)
             
+            # Démarrer le frontend
             self.start_frontend()
             time.sleep(5)
             
+            # Démarrer la surveillance
             self.monitor_processes()
             
             print("\n" + "=" * 60)
