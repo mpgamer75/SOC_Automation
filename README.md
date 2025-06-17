@@ -243,14 +243,8 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 - **Documentación**: Ver archivos de configuración y comentarios en el código
 - **Ejemplos**: Usar archivos de ejemplo en la carpeta `examples/`
 
-## 🎉 Agradecimientos
+# Author 
 
-- **Pandas**: Para el procesamiento eficiente de datos
-- **FastAPI**: Para la API moderna y rápida
-- **Next.js**: Para el framework de React
-- **Tailwind CSS**: Para los estilos modernos
-- **Recharts**: Para las visualizaciones interactivas
+- Charles Lantigua Jorge -mpgamer75
 
----
-
-**Desarrollado con ❤️ para equipos SOC y administradores de sistemas** 
+**Desarrollado para el equipo de IT de Altice Dominicana**
