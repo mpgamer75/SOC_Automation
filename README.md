@@ -1,250 +1,256 @@
-# 🎯 Altice File Comparator
+# 🔍 Altice File Comparator - Comparador Inteligente de Archivos
 
-Une application web moderne pour comparer des fichiers CSV, Excel et XLS de manière intelligente et visuelle.
+Una aplicación web avanzada para comparar archivos CSV, Excel y XLS con análisis detallado y visualizaciones interactivas. Desarrollada para equipos SOC (Security Operations Center) y administradores de sistemas que necesitan identificar diferencias precisas entre conjuntos de datos.
 
-## 🚀 Fonctionnalités
+## ✨ Características Principales
 
-- **Comparaison intelligente** : Détecte les différences entre fichiers CSV, XLSX et XLS
-- **Interface moderne** : Interface utilisateur intuitive avec drag & drop
-- **Visualisations** : Graphiques interactifs pour analyser les différences
-- **Rapports détaillés** : Statistiques complètes et listes de différences
-- **Performance** : Traitement rapide même pour de gros fichiers
-- **Multi-format** : Support complet pour CSV, Excel et XLS
+### 🔄 Comparación Inteligente
+- **Comparación de múltiples formatos**: CSV, Excel (.xlsx, .xls)
+- **Análisis estructural**: Detección de diferencias en columnas y filas
+- **Comparación de contenido**: Análisis celda por celda
+- **Contenido diferenciador**: Identificación de elementos únicos en cada archivo
 
-## 🏗️ Architecture
+### 📊 Visualizaciones Avanzadas
+- **Gráficos interactivos**: Gráficos de barras, líneas y circular
+- **Estadísticas en tiempo real**: Métricas detalladas de diferencias
+- **Dashboard responsivo**: Interfaz moderna y fácil de usar
+- **Reportes exportables**: Múltiples formatos (JSON, TXT, CSV, Excel)
 
-- **Backend** : FastAPI (Python) avec pandas pour le traitement des données
-- **Frontend** : Next.js (React) avec TypeScript et Tailwind CSS
-- **Graphiques** : Recharts pour les visualisations
-- **Configuration** : Système de configuration flexible avec variables d'environnement
+### 🎯 Funcionalidades Especializadas
 
-## 📋 Prérequis
+#### Contenido Diferenciador
+La aplicación ahora incluye una funcionalidad avanzada que identifica y muestra el contenido que diferencia los dos documentos:
 
+- **Elementos únicos en referencia**: Datos presentes solo en el archivo de referencia
+- **Elementos únicos en comparación**: Datos presentes solo en el archivo a comparar
+- **Columnas únicas**: Identificación de columnas específicas de cada archivo
+- **Análisis de filas**: Detección de registros únicos basada en columnas comunes
+
+#### Casos de Uso Especializados
+- **Inventario de máquinas**: Comparar listas de equipos en Active Directory
+- **Control de acceso**: Identificar usuarios nuevos o eliminados
+- **Auditoría de datos**: Detectar cambios en bases de datos
+- **Análisis de logs**: Comparar archivos de registro de seguridad
+
+## 🚀 Instalación y Configuración
+
+### Requisitos Previos
 - Python 3.8+
 - Node.js 16+
-- npm ou yarn
+- npm o yarn
 
-## 🛠️ Installation
+### Instalación Rápida
 
-### 1. Cloner le projet
+#### Opción 1: Script Automático (Recomendado)
 ```bash
-git clone <repository-url>
-cd altice-project/SOC_Automation
+# Ejecutar el script de instalación automática
+./demarrer_application.bat
 ```
 
-### 2. Installer les dépendances du backend
+#### Opción 2: Instalación Manual
+
+1. **Clonar el repositorio**
+```bash
+git clone <repository-url>
+cd SOC_Automation
+```
+
+2. **Configurar el Backend**
 ```bash
 cd backend
+python -m venv venv
+source venv/bin/activate  # En Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 3. Installer les dépendances du frontend
+3. **Configurar el Frontend**
 ```bash
 cd ../frontend
 npm install
 ```
 
-## 🚀 Démarrage rapide
+## 🎮 Uso de la Aplicación
 
-### Option 1 : Utiliser le script batch (Windows)
-Double-cliquez sur `demarrer_application.bat` et suivez les instructions.
+### Inicio Rápido
 
-### Option 2 : Utiliser les scripts Python
-
-#### Mode développement
+#### Desarrollo
 ```bash
 python start_dev.py
 ```
 
-#### Mode production
+#### Producción
 ```bash
 python start_production.py
 ```
 
-### Option 3 : Démarrage manuel
+### Interfaz de Usuario
 
-#### Backend
-```bash
-cd backend
-python main.py
-```
+1. **Selección de Archivos**
+   - Arrastra y suelta archivos o haz clic para seleccionar
+   - Soporte para múltiples formatos (CSV, Excel)
+   - Validación automática de archivos
 
-#### Frontend
-```bash
-cd frontend
-npm run dev
-```
+2. **Análisis de Comparación**
+   - Comparación automática al hacer clic en "Comparar Archivos"
+   - Procesamiento en tiempo real con indicador de progreso
+   - Detección automática de diferencias estructurales y de contenido
 
-## 🌐 Accès à l'application
+3. **Visualización de Resultados**
+   - **Dashboard principal**: Estadísticas generales y gráficos
+   - **Diferencias detalladas**: Tabla con todas las diferencias encontradas
+   - **Contenido diferenciador**: Elementos únicos en cada archivo
+   - **Información de comparación**: Metadatos del proceso
 
-- **Interface web** : http://localhost:3000
-- **API Backend** : http://localhost:8000
-- **Documentation API** : http://localhost:8000/docs
+### Exportación de Reportes
 
-## ⚙️ Configuration
+La aplicación permite exportar reportes en múltiples formatos:
 
-### Variables d'environnement
+- **JSON**: Datos completos en formato estructurado
+- **TXT**: Reporte legible con formato de texto
+- **CSV**: Datos tabulares para análisis posterior
+- **Excel**: Formato compatible con Microsoft Excel
 
-Créez un fichier `.env` dans le dossier `backend` avec les paramètres suivants :
-
-```env
-# Configuration du serveur
-API_HOST=0.0.0.0
-API_PORT=8000
-DEBUG=False
-
-# Configuration CORS
-FRONTEND_URL=http://localhost:3000
-ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
-
-# Configuration des fichiers
-MAX_FILE_SIZE=10485760
-ALLOWED_EXTENSIONS=csv,xlsx,xls
-
-# Configuration de sécurité
-SECRET_KEY=your-secret-key-here
-
-# Configuration des logs
-LOG_LEVEL=INFO
-LOG_FILE=app.log
-
-# Configuration de l'environnement
-ENV=production
-```
-
-## 📊 Fonctionnalités de comparaison
-
-### Types de différences détectées
-
-1. **Différences structurelles**
-   - Nombre de colonnes différent
-   - Colonnes manquantes ou ajoutées
-   - Noms de colonnes différents
-
-2. **Différences de contenu**
-   - Celdas modifiées
-   - Filas ajoutées ou supprimées
-   - Valeurs différentes dans les mêmes positions
-
-### Statistiques fournies
-
-- Nombre total de différences
-- Répartition par type de différence
-- Temps de traitement
-- Métadonnées des fichiers
-
-## 🎨 Interface utilisateur
-
-### Fonctionnalités principales
-
-- **Drag & Drop** : Glissez-déposez vos fichiers directement
-- **Validation en temps réel** : Vérification automatique des formats
-- **Graphiques interactifs** : Visualisations des différences
-- **Tableau détaillé** : Liste complète des différences
-- **Design responsive** : Compatible mobile et desktop
-
-### Composants visuels
-
-- **Graphiques en barres** : Comparaison de structure
-- **Graphiques circulaires** : Répartition des différences
-- **Cartes de statistiques** : Résumé rapide
-- **Tableaux détaillés** : Analyse approfondie
-
-## 🔧 Développement
-
-### Structure du projet
+## 📁 Estructura del Proyecto
 
 ```
 SOC_Automation/
-├── backend/
-│   ├── main.py              # Serveur FastAPI
-│   ├── file_comparator.py   # Logique de comparaison
-│   ├── config.py            # Configuration
-│   └── requirements.txt     # Dépendances Python
-├── frontend/
+├── backend/                 # API FastAPI
+│   ├── main.py             # Servidor principal
+│   ├── file_comparator.py  # Lógica de comparación
+│   ├── config.py           # Configuración
+│   └── requirements.txt    # Dependencias Python
+├── frontend/               # Aplicación Next.js
 │   ├── src/
-│   │   ├── app/
-│   │   └── components/
-│   │       └── FileComparatorDashboard.tsx
-│   └── package.json
-├── start_dev.py             # Script de développement
-├── start_production.py      # Script de production
-└── demarrer_application.bat # Lanceur Windows
+│   │   ├── app/           # Páginas de la aplicación
+│   │   └── components/    # Componentes React
+│   ├── package.json       # Dependencias Node.js
+│   └── tailwind.config.ts # Configuración de estilos
+├── examples/              # Archivos de ejemplo
+│   ├── maquinas_referencia.csv
+│   └── maquinas_nuevas.csv
+├── start_dev.py          # Script de desarrollo
+├── start_production.py   # Script de producción
+├── test_app.py           # Script de pruebas
+└── demarrer_application.bat # Script de inicio Windows
 ```
 
-### Scripts disponibles
+## 🔧 Configuración Avanzada
 
-- `start_dev.py` : Mode développement avec hot reload
-- `start_production.py` : Mode production optimisé
-- `demarrer_application.bat` : Interface graphique Windows
+### Variables de Entorno
+```bash
+# Backend
+BACKEND_HOST=localhost
+BACKEND_PORT=8000
+LOG_LEVEL=INFO
+CORS_ORIGINS=http://localhost:3000
 
-## 🐛 Dépannage
+# Frontend
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
 
-### Problèmes courants
+### Personalización de Estilos
+El frontend utiliza Tailwind CSS para estilos. Puedes personalizar:
+- Colores del tema en `tailwind.config.ts`
+- Componentes en `src/components/`
+- Páginas en `src/app/`
 
-1. **Port déjà utilisé**
-   - Changez le port dans le fichier `.env`
-   - Ou arrêtez les processus utilisant les ports 3000/8000
+## 🧪 Pruebas
 
-2. **Dépendances manquantes**
-   - Vérifiez que Python et Node.js sont installés
-   - Relancez l'installation des dépendances
+### Archivos de Ejemplo
+El proyecto incluye archivos de ejemplo para probar la funcionalidad:
 
-3. **Erreurs CORS**
-   - Vérifiez la configuration `FRONTEND_URL` dans `.env`
-   - Assurez-vous que les URLs correspondent
+1. **maquinas_referencia.csv**: Lista de máquinas en Active Directory
+2. **maquinas_nuevas.csv**: Lista actualizada con nuevas máquinas
 
-4. **Fichiers trop volumineux**
-   - Augmentez `MAX_FILE_SIZE` dans `.env`
-   - Ou réduisez la taille des fichiers
+### Ejecutar Pruebas
+```bash
+python test_app.py
+```
 
-### Logs
+## 📊 Funcionalidades de Comparación
 
-Les logs sont disponibles dans :
-- **Backend** : `backend/app.log`
-- **Frontend** : Console du navigateur
+### Análisis Estructural
+- **Columnas**: Detección de columnas agregadas, eliminadas o modificadas
+- **Filas**: Identificación de filas nuevas, eliminadas o modificadas
+- **Tipos de datos**: Validación de formatos y tipos
 
-## 📈 Performance
+### Análisis de Contenido
+- **Comparación celda por celda**: Detección de valores modificados
+- **Elementos únicos**: Identificación de registros únicos en cada archivo
+- **Claves de comparación**: Análisis basado en columnas comunes
 
-### Optimisations
+### Reportes Detallados
+- **Estadísticas generales**: Totales, diferencias, tiempo de procesamiento
+- **Diferencias específicas**: Ubicación exacta de cada diferencia
+- **Contenido diferenciador**: Elementos únicos con datos completos
 
-- Traitement par chunks pour les gros fichiers
-- Limitation des différences affichées (100 max)
-- Conversion en string pour éviter les problèmes de types
-- Support multi-encodage pour les CSV
+## 🛠️ Desarrollo
 
-### Limites
+### Backend (FastAPI)
+- **Arquitectura**: API REST con FastAPI
+- **Procesamiento**: Pandas para análisis de datos
+- **Validación**: Pydantic para validación de datos
+- **Logging**: Sistema de logs configurable
 
-- Taille maximale de fichier : 10MB par défaut
-- Nombre de différences affichées : 100 max
-- Formats supportés : CSV, XLSX, XLS
+### Frontend (Next.js + React)
+- **Framework**: Next.js 14 con App Router
+- **UI**: Tailwind CSS para estilos
+- **Gráficos**: Recharts para visualizaciones
+- **Estado**: React Hooks para gestión de estado
 
-## 🔒 Sécurité
+### Tecnologías Utilizadas
+- **Backend**: Python, FastAPI, Pandas, NumPy
+- **Frontend**: TypeScript, React, Next.js, Tailwind CSS
+- **Gráficos**: Recharts
+- **Build**: Vite, Webpack
 
-- Validation des types de fichiers
-- Limitation de la taille des fichiers
-- Configuration CORS sécurisée
-- Gestion des erreurs robuste
+## 🔒 Seguridad
 
-## 🤝 Contribution
+- **Validación de archivos**: Verificación de tipos y tamaños
+- **CORS configurado**: Control de acceso entre dominios
+- **Sanitización de datos**: Limpieza de entradas de usuario
+- **Logs de seguridad**: Registro de actividades importantes
 
-1. Fork le projet
-2. Créez une branche feature (`git checkout -b feature/AmazingFeature`)
-3. Committez vos changements (`git commit -m 'Add some AmazingFeature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrez une Pull Request
+## 📈 Rendimiento
 
-## 📄 Licence
+- **Procesamiento optimizado**: Algoritmos eficientes para archivos grandes
+- **Límites de memoria**: Control de uso de recursos
+- **Caché inteligente**: Optimización de comparaciones repetidas
+- **Procesamiento asíncrono**: No bloqueo de la interfaz
 
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+## 🤝 Contribución
 
-## 📞 Support
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
 
-Pour toute question ou problème :
-- Ouvrez une issue sur GitHub
-- Consultez la documentation API sur http://localhost:8000/docs
-- Vérifiez les logs dans `backend/app.log`
+## 📝 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+
+## 🆘 Soporte
+
+### Problemas Comunes
+
+1. **Error de CORS**: Verificar configuración de CORS en `config.py`
+2. **Archivo no encontrado**: Verificar rutas y permisos de archivos
+3. **Error de memoria**: Reducir tamaño de archivos o aumentar memoria disponible
+
+### Contacto
+- **Issues**: Crear un issue en GitHub
+- **Documentación**: Ver archivos de configuración y comentarios en el código
+- **Ejemplos**: Usar archivos de ejemplo en la carpeta `examples/`
+
+## 🎉 Agradecimientos
+
+- **Pandas**: Para el procesamiento eficiente de datos
+- **FastAPI**: Para la API moderna y rápida
+- **Next.js**: Para el framework de React
+- **Tailwind CSS**: Para los estilos modernos
+- **Recharts**: Para las visualizaciones interactivas
 
 ---
 
-**🎯 Altice File Comparator** - Comparaison intelligente de fichiers
+**Desarrollado con ❤️ para equipos SOC y administradores de sistemas** 

@@ -7,3 +7,10 @@
 2025-06-17 02:21:27,620 - __main__ - INFO - Comparación completada: 0 diferencias encontradas
 2025-06-17 02:25:14,953 - __main__ - INFO - Comparando archivos: Destinations ING5 2023-2024.xlsx vs Destinations ING5 2023-2024.xlsx
 2025-06-17 02:25:15,351 - __main__ - INFO - Comparación completada: 0 diferencias encontradas
+2025-06-17 10:26:18,178 - __main__ - INFO - Démarrage du serveur sur 0.0.0.0:8000
+2025-06-17 10:26:18,179 - __main__ - INFO - Environnement: production
+2025-06-17 10:26:18,179 - __main__ - INFO - Frontend URL: http://localhost:3000
+2025-06-17 10:27:07,497 - __main__ - INFO - Comparando archivos: Destinations ING5 2023-2024.xlsx vs Destinations ING5 2023-2024.xlsx
+2025-06-17 10:27:08,741 - __main__ - INFO - Comparación completada: 0 diferencias encontradas
+2025-06-17 11:02:29,047 - __main__ - INFO - Comparando archivos: maquinas_referencia.csv vs maquinas_nuevas.csv
+2025-06-17 11:02:29,055 - __main__ - INFO - Comparación completada: 2 diferencias encontradas

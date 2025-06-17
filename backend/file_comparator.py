@@ -39,6 +39,62 @@ class FileComparator:
         except Exception as e:
             raise ValueError(f"Error al leer el archivo {filename}: {str(e)}")
     
+    def _extract_different_content(self, df1: pd.DataFrame, df2: pd.DataFrame) -> Dict[str, Any]:
+        """
+        Extrae el contenido que diferencia los dos documentos
+        Retorna elementos únicos en cada archivo
+        """
+        # Convertir a string para comparación
+        df1_str = df1.astype(str)
+        df2_str = df2.astype(str)
+        
+        # Obtener columnas comunes
+        common_cols = list(set(df1.columns) & set(df2.columns))
+        
+        # Elementos únicos en el archivo de referencia (df1)
+        unique_in_reference = []
+        # Elementos únicos en el archivo a comparar (df2)
+        unique_in_compare = []
+        
+        if common_cols:
+            # Crear una clave única para cada fila basada en las columnas comunes
+            df1_key = df1_str[common_cols].apply(lambda x: '|'.join(x), axis=1)
+            df2_key = df2_str[common_cols].apply(lambda x: '|'.join(x), axis=1)
+            
+            # Encontrar filas únicas en cada DataFrame
+            df1_unique_keys = set(df1_key) - set(df2_key)
+            df2_unique_keys = set(df2_key) - set(df1_key)
+            
+            # Extraer las filas únicas
+            for key in df1_unique_keys:
+                row_idx = df1_key[df1_key == key].index[0]
+                unique_in_reference.append({
+                    'row_index': int(row_idx),
+                    'data': df1.iloc[row_idx].to_dict(),
+                    'key_columns': common_cols
+                })
+            
+            for key in df2_unique_keys:
+                row_idx = df2_key[df2_key == key].index[0]
+                unique_in_compare.append({
+                    'row_index': int(row_idx),
+                    'data': df2.iloc[row_idx].to_dict(),
+                    'key_columns': common_cols
+                })
+        
+        # Analizar columnas únicas
+        cols_only_in_reference = list(set(df1.columns) - set(df2.columns))
+        cols_only_in_compare = list(set(df2.columns) - set(df1.columns))
+        
+        return {
+            'unique_in_reference': unique_in_reference[:50],  # Limitar para el frontend
+            'unique_in_compare': unique_in_compare[:50],      # Limitar para el frontend
+            'columns_only_in_reference': cols_only_in_reference,
+            'columns_only_in_compare': cols_only_in_compare,
+            'total_unique_in_reference': len(unique_in_reference),
+            'total_unique_in_compare': len(unique_in_compare)
+        }
+    
     def compare_dataframes(self, df1: pd.DataFrame, df2: pd.DataFrame, 
                           ref_filename: str, comp_filename: str) -> Dict[str, Any]:
         """
@@ -65,8 +121,11 @@ class FileComparator:
             content_diff = self._compare_content(df1, df2)
             differences.extend(content_diff)
         
+        # Extraer contenido que diferencia los documentos
+        different_content = self._extract_different_content(df1, df2)
+        
         # Estadísticas
-        summary = self._generate_summary(df1, df2, differences)
+        summary = self._generate_summary(df1, df2, differences, different_content)
         
         # Tiempo de procesamiento
         processing_time = (datetime.now() - start_time).total_seconds()
@@ -75,6 +134,7 @@ class FileComparator:
             "identical": len(differences) == 0,
             "summary": summary,
             "differences": differences[:100],  # Limitar a 100 diferencias para el frontend
+            "different_content": different_content,
             "metadata": {
                 "comparisonDate": datetime.now().isoformat(),
                 "referenceFileName": ref_filename,
@@ -190,7 +250,8 @@ class FileComparator:
         return differences
     
     def _generate_summary(self, df1: pd.DataFrame, df2: pd.DataFrame, 
-                         differences: List[Dict[str, Any]]) -> Dict[str, int]:
+                         differences: List[Dict[str, Any]], 
+                         different_content: Dict[str, Any]) -> Dict[str, int]:
         """
         Genera un resumen estadístico de las diferencias
         """
@@ -213,7 +274,9 @@ class FileComparator:
             "referenceRows": len(df1),
             "referenceColumns": len(df1.columns),
             "compareRows": len(df2),
-            "compareColumns": len(df2.columns)
+            "compareColumns": len(df2.columns),
+            "uniqueInReference": different_content.get('total_unique_in_reference', 0),
+            "uniqueInCompare": different_content.get('total_unique_in_compare', 0)
         }
     
     def compare_files(self, file1_content: bytes, file1_name: str, 
