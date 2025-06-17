@@ -189,4 +189,4 @@ Pronto :D
 
 ---
 
-**Desarrollado por Altice - Herramienta de Comparación de Archivos Inteligente** 🔍
+**Desarrollado para el equipo IT de Altice Dominicana - Herramienta de Comparación de Archivos Inteligente** 🔍
