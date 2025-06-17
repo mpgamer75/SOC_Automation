@@ -1,100 +1,91 @@
-# Altice File Comparator - Comparateur de Fichiers
+# 🎯 Altice File Comparator
 
-## 📋 Description
+Une application web moderne pour comparer des fichiers CSV, Excel et XLS de manière intelligente et visuelle.
 
-Application web pour comparer des fichiers CSV, Excel et XLS. Développée pour l'équipe IT d'Altice, cette application permet de :
+## 🚀 Fonctionnalités
 
-- **Comparer deux fichiers** (référence vs fichier à comparer)
-- **Détecter les différences** au niveau des cellules, lignes et colonnes
-- **Générer des rapports** détaillés en format JSON ou TXT
-- **Visualiser les résultats** avec des graphiques interactifs
-- **Valider les fichiers** avant comparaison
+- **Comparaison intelligente** : Détecte les différences entre fichiers CSV, XLSX et XLS
+- **Interface moderne** : Interface utilisateur intuitive avec drag & drop
+- **Visualisations** : Graphiques interactifs pour analyser les différences
+- **Rapports détaillés** : Statistiques complètes et listes de différences
+- **Performance** : Traitement rapide même pour de gros fichiers
+- **Multi-format** : Support complet pour CSV, Excel et XLS
 
 ## 🏗️ Architecture
 
-- **Backend**: FastAPI (Python) avec pandas pour le traitement des données
-- **Frontend**: Next.js 15 avec React 19 et Tailwind CSS
-- **Base de données**: SQLite (pour future utilisation)
-- **Logs**: Système de logging intégré
+- **Backend** : FastAPI (Python) avec pandas pour le traitement des données
+- **Frontend** : Next.js (React) avec TypeScript et Tailwind CSS
+- **Graphiques** : Recharts pour les visualisations
+- **Configuration** : Système de configuration flexible avec variables d'environnement
 
-## 🚀 Installation et Démarrage
+## 📋 Prérequis
 
-### Prérequis
-
-- Python 3.12+
-- Node.js 18+
+- Python 3.8+
+- Node.js 16+
 - npm ou yarn
 
-### Installation Rapide
+## 🛠️ Installation
 
-1. **Cloner le projet**
+### 1. Cloner le projet
 ```bash
 git clone <repository-url>
-cd SOC_Automation
+cd altice-project/SOC_Automation
 ```
 
-2. **Installer les dépendances**
+### 2. Installer les dépendances du backend
 ```bash
-# Backend
 cd backend
 pip install -r requirements.txt
+```
 
-# Frontend
+### 3. Installer les dépendances du frontend
+```bash
 cd ../frontend
 npm install
 ```
 
-3. **Démarrer en mode production**
+## 🚀 Démarrage rapide
+
+### Option 1 : Utiliser le script batch (Windows)
+Double-cliquez sur `demarrer_application.bat` et suivez les instructions.
+
+### Option 2 : Utiliser les scripts Python
+
+#### Mode développement
 ```bash
-# Depuis la racine du projet
+python start_dev.py
+```
+
+#### Mode production
+```bash
 python start_production.py
 ```
 
-### Démarrage Manuel
+### Option 3 : Démarrage manuel
 
 #### Backend
 ```bash
 cd backend
 python main.py
 ```
-Le serveur backend sera disponible sur `http://localhost:8000`
 
 #### Frontend
 ```bash
 cd frontend
 npm run dev
 ```
-L'interface sera disponible sur `http://localhost:3000`
 
-## 📁 Structure du Projet
+## 🌐 Accès à l'application
 
-```
-SOC_Automation/
-├── backend/
-│   ├── main.py                 # Serveur FastAPI principal
-│   ├── file_comparator.py      # Logique de comparaison
-│   ├── config.py              # Configuration
-│   ├── requirements.txt       # Dépendances Python
-│   └── app.log               # Fichier de logs
-├── frontend/
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── page.tsx      # Page principale
-│   │   │   ├── layout.tsx    # Layout de l'application
-│   │   │   └── globals.css   # Styles globaux
-│   │   └── components/
-│   │       └── FileComparatorDashboard.tsx  # Composant principal
-│   ├── package.json          # Dépendances Node.js
-│   └── next.config.js        # Configuration Next.js
-├── start_production.py       # Script de démarrage production
-└── README.md                # Ce fichier
-```
+- **Interface web** : http://localhost:3000
+- **API Backend** : http://localhost:8000
+- **Documentation API** : http://localhost:8000/docs
 
-## 🔧 Configuration
+## ⚙️ Configuration
 
-### Variables d'Environnement
+### Variables d'environnement
 
-Créer un fichier `.env` dans le dossier `backend/` :
+Créez un fichier `.env` dans le dossier `backend` avec les paramètres suivants :
 
 ```env
 # Configuration du serveur
@@ -103,228 +94,157 @@ API_PORT=8000
 DEBUG=False
 
 # Configuration CORS
+FRONTEND_URL=http://localhost:3000
 ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 
 # Configuration des fichiers
-MAX_FILE_SIZE=10485760  # 10MB
-SUPPORTED_FORMATS=.csv,.xlsx,.xls
+MAX_FILE_SIZE=10485760
+ALLOWED_EXTENSIONS=csv,xlsx,xls
 
 # Configuration de sécurité
-SECRET_KEY=your-secret-key-change-in-production
+SECRET_KEY=your-secret-key-here
 
 # Configuration des logs
 LOG_LEVEL=INFO
 LOG_FILE=app.log
+
+# Configuration de l'environnement
+ENV=production
 ```
 
-### Configuration Frontend
+## 📊 Fonctionnalités de comparaison
 
-Créer un fichier `.env.local` dans le dossier `frontend/` :
+### Types de différences détectées
 
-```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
+1. **Différences structurelles**
+   - Nombre de colonnes différent
+   - Colonnes manquantes ou ajoutées
+   - Noms de colonnes différents
+
+2. **Différences de contenu**
+   - Celdas modifiées
+   - Filas ajoutées ou supprimées
+   - Valeurs différentes dans les mêmes positions
+
+### Statistiques fournies
+
+- Nombre total de différences
+- Répartition par type de différence
+- Temps de traitement
+- Métadonnées des fichiers
+
+## 🎨 Interface utilisateur
+
+### Fonctionnalités principales
+
+- **Drag & Drop** : Glissez-déposez vos fichiers directement
+- **Validation en temps réel** : Vérification automatique des formats
+- **Graphiques interactifs** : Visualisations des différences
+- **Tableau détaillé** : Liste complète des différences
+- **Design responsive** : Compatible mobile et desktop
+
+### Composants visuels
+
+- **Graphiques en barres** : Comparaison de structure
+- **Graphiques circulaires** : Répartition des différences
+- **Cartes de statistiques** : Résumé rapide
+- **Tableaux détaillés** : Analyse approfondie
+
+## 🔧 Développement
+
+### Structure du projet
+
+```
+SOC_Automation/
+├── backend/
+│   ├── main.py              # Serveur FastAPI
+│   ├── file_comparator.py   # Logique de comparaison
+│   ├── config.py            # Configuration
+│   └── requirements.txt     # Dépendances Python
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   └── components/
+│   │       └── FileComparatorDashboard.tsx
+│   └── package.json
+├── start_dev.py             # Script de développement
+├── start_production.py      # Script de production
+└── demarrer_application.bat # Lanceur Windows
 ```
 
-## 📊 Fonctionnalités
+### Scripts disponibles
 
-### Comparaison de Fichiers
-
-1. **Upload de fichiers** : Interface drag & drop pour sélectionner les fichiers
-2. **Validation** : Vérification automatique du format et de la taille
-3. **Comparaison** : Analyse détaillée des différences
-4. **Rapports** : Génération de rapports en JSON ou TXT
-5. **Visualisation** : Graphiques des différences trouvées
-
-### Types de Différences Détectées
-
-- **Celdas modificadas** : Valeurs modifiées dans les cellules
-- **Filas agregadas/eliminadas** : Lignes ajoutées ou supprimées
-- **Columnas agregadas/eliminadas** : Colonnes ajoutées ou supprimées
-- **Diferencias estructurales** : Différences dans la structure
-
-### Formats Supportés
-
-- **CSV** : Fichiers CSV avec encodage UTF-8, Latin-1, CP1252
-- **Excel** : Fichiers .xlsx et .xls
-- **Taille maximale** : 10MB par fichier (configurable)
-
-## 🔌 API Endpoints
-
-### GET /
-- **Description** : Vérification du statut de l'API
-- **Réponse** : Informations sur l'API et formats supportés
-
-### GET /health
-- **Description** : Endpoint de santé pour le monitoring
-- **Réponse** : Statut du service
-
-### POST /compare
-- **Description** : Comparaison de deux fichiers
-- **Paramètres** : `file1` (référence), `file2` (à comparer)
-- **Réponse** : Résultat détaillé de la comparaison
-
-### POST /validate-file
-- **Description** : Validation d'un fichier
-- **Paramètres** : `file` (fichier à valider)
-- **Réponse** : Informations sur le fichier
-
-## 📈 Monitoring et Logs
-
-### Logs Backend
-
-Les logs sont automatiquement générés dans `backend/app.log` avec les niveaux :
-- **INFO** : Opérations normales
-- **ERROR** : Erreurs de traitement
-- **DEBUG** : Informations détaillées (si DEBUG=True)
-
-### Monitoring
-
-- **Health Check** : `GET /health`
-- **Documentation API** : `http://localhost:8000/docs`
-- **Logs en temps réel** : Affichés dans la console
-
-## 🚀 Déploiement en Production
-
-### 1. Préparation
-
-```bash
-# Build du frontend
-cd frontend
-npm run build
-
-# Test du backend
-cd ../backend
-python -m pytest tests/
-```
-
-### 2. Configuration Production
-
-```env
-# .env production
-DEBUG=False
-LOG_LEVEL=WARNING
-SECRET_KEY=your-very-secure-secret-key
-ALLOWED_ORIGINS=https://your-domain.com
-```
-
-### 3. Démarrage Production
-
-```bash
-# Utiliser le script de production
-python start_production.py
-
-# Ou démarrer manuellement
-cd backend && python main.py &
-cd frontend && npm start &
-```
-
-### 4. Reverse Proxy (Nginx)
-
-```nginx
-server {
-    listen 80;
-    server_name your-domain.com;
-
-    # Frontend
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-
-    # Backend API
-    location /api/ {
-        proxy_pass http://localhost:8000/;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-}
-```
-
-## 🔒 Sécurité
-
-### Mesures Implémentées
-
-- **Validation des fichiers** : Type et taille
-- **CORS configuré** : Origines autorisées
-- **Gestion d'erreurs** : Messages d'erreur sécurisés
-- **Logs sécurisés** : Pas d'informations sensibles
-
-### Recommandations Production
-
-- **HTTPS** : Utiliser un certificat SSL
-- **Firewall** : Restreindre l'accès aux ports
-- **Monitoring** : Surveiller les logs et performances
-- **Backup** : Sauvegarder les données importantes
+- `start_dev.py` : Mode développement avec hot reload
+- `start_production.py` : Mode production optimisé
+- `demarrer_application.bat` : Interface graphique Windows
 
 ## 🐛 Dépannage
 
-### Problèmes Courants
+### Problèmes courants
 
 1. **Port déjà utilisé**
-   ```bash
-   # Vérifier les ports
-   netstat -tulpn | grep :8000
-   netstat -tulpn | grep :3000
-   ```
+   - Changez le port dans le fichier `.env`
+   - Ou arrêtez les processus utilisant les ports 3000/8000
 
 2. **Dépendances manquantes**
-   ```bash
-   # Backend
-   pip install -r requirements.txt
-   
-   # Frontend
-   npm install
-   ```
+   - Vérifiez que Python et Node.js sont installés
+   - Relancez l'installation des dépendances
 
-3. **Erreur CORS**
-   - Vérifier `ALLOWED_ORIGINS` dans la configuration
-   - S'assurer que le frontend et backend sont sur les bons ports
+3. **Erreurs CORS**
+   - Vérifiez la configuration `FRONTEND_URL` dans `.env`
+   - Assurez-vous que les URLs correspondent
 
-4. **Fichier trop volumineux**
-   - Augmenter `MAX_FILE_SIZE` dans la configuration
-   - Ou réduire la taille du fichier
+4. **Fichiers trop volumineux**
+   - Augmentez `MAX_FILE_SIZE` dans `.env`
+   - Ou réduisez la taille des fichiers
 
-### Logs de Débogage
+### Logs
 
-```bash
-# Activer les logs détaillés
-export LOG_LEVEL=DEBUG
-python main.py
-```
+Les logs sont disponibles dans :
+- **Backend** : `backend/app.log`
+- **Frontend** : Console du navigateur
+
+## 📈 Performance
+
+### Optimisations
+
+- Traitement par chunks pour les gros fichiers
+- Limitation des différences affichées (100 max)
+- Conversion en string pour éviter les problèmes de types
+- Support multi-encodage pour les CSV
+
+### Limites
+
+- Taille maximale de fichier : 10MB par défaut
+- Nombre de différences affichées : 100 max
+- Formats supportés : CSV, XLSX, XLS
+
+## 🔒 Sécurité
+
+- Validation des types de fichiers
+- Limitation de la taille des fichiers
+- Configuration CORS sécurisée
+- Gestion des erreurs robuste
+
+## 🤝 Contribution
+
+1. Fork le projet
+2. Créez une branche feature (`git checkout -b feature/AmazingFeature`)
+3. Committez vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. Push vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrez une Pull Request
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
 ## 📞 Support
 
 Pour toute question ou problème :
-
-1. **Vérifier les logs** : `backend/app.log`
-2. **Consulter la documentation API** : `http://localhost:8000/docs`
-3. **Tester les endpoints** : Utiliser les outils de test
-
-## 🔄 Mise à Jour
-
-### Mise à Jour du Code
-
-```bash
-git pull origin main
-cd backend && pip install -r requirements.txt
-cd ../frontend && npm install
-```
-
-### Mise à Jour des Dépendances
-
-```bash
-# Backend
-pip list --outdated
-pip install -U package-name
-
-# Frontend
-npm outdated
-npm update
-```
+- Ouvrez une issue sur GitHub
+- Consultez la documentation API sur http://localhost:8000/docs
+- Vérifiez les logs dans `backend/app.log`
 
 ---
 
-**Version** : 1.0.0  
-**Dernière mise à jour** : 2024  
-**Équipe** : IT Altice 
+**🎯 Altice File Comparator** - Comparaison intelligente de fichiers
