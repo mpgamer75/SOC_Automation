@@ -22,3 +22,8 @@
 2025-06-17 14:54:16,123 - __main__ - INFO - URL del Frontend: http://localhost:3000
 2025-06-17 14:55:04,236 - __main__ - INFO - Comparando archivos: maquinas_referencia.csv vs maquinas_nuevas.csv
 2025-06-17 14:55:04,276 - __main__ - INFO - Comparación completada: 2 diferencias encontradas
+2025-06-17 15:23:33,872 - __main__ - INFO - Iniciando servidor en 0.0.0.0:8000
+2025-06-17 15:23:33,872 - __main__ - INFO - Ambiente: production
+2025-06-17 15:23:33,873 - __main__ - INFO - URL del Frontend: http://localhost:3000
+2025-06-17 15:25:07,426 - __main__ - INFO - Comparando archivos: sample_data.csv vs sample_data_modified.csv
+2025-06-17 15:25:07,447 - __main__ - INFO - Comparación completada: 2 diferencias encontradas
