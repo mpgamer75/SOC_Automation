@@ -1,0 +1,36 @@
+¡INSTALACIÓN COMPLETADA EXITOSAMENTE!
+ALTICE FILE COMPARATOR
+
+Su nueva herramienta de comparación de archivos está lista para usar.
+
+QUÉ SE HA INSTALADO:
+✓ Aplicación principal en: C:\Program Files\Altice File Comparator
+✓ Acceso directo en el escritorio
+✓ Menú de inicio con enlaces útiles
+✓ Base de datos local configurada
+✓ Archivos de ejemplo incluidos
+✓ Documentación completa en español
+
+PRIMEROS PASOS:
+1. Ejecute la aplicación desde el acceso directo del escritorio
+2. Revise los archivos de ejemplo en la carpeta "examples"
+3. Consulte la guía de usuario completa (PDF incluido)
+4. Configure su biblioteca de archivos de referencia
+
+SOPORTE TÉCNICO:
+- Email: it-support@altice.com.do
+- Teléfono: +1 (809) 200-1000 ext. 1234
+- Documentación: Menú Ayuda > Guía de Usuario
+
+CARACTERÍSTICAS DESTACADAS:
+→ Comparación automática de archivos CSV, Excel y XLS
+→ Detección inteligente de diferencias
+→ Reportes exportables en múltiples formatos
+→ Biblioteca de referencias para uso repetido
+→ Historial completo de todas las comparaciones
+
+¡Gracias por confiar en las herramientas de Altice Dominicana!
+
+Desarrollado por: Charles Lantigua Jorge
+Departamento de IT - Altice Dominicana
+© 2024 Altice Dominicana

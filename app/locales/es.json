@@ -1,0 +1,103 @@
+{
+  "app": {
+    "name": "Altice File Comparator",
+    "title": "Altice File Comparator - Comparador de Archivos",
+    "description": "Herramienta profesional para comparar archivos CSV, Excel y XLS",
+    "shortcutName": "Comparador de Archivos Altice"
+  },
+  "menu": {
+    "file": "Archivo",
+    "newComparison": "Nueva Comparación",
+    "openReference": "Abrir Archivo de Referencia",
+    "exit": "Salir",
+    "tools": "Herramientas",
+    "exportHistory": "Exportar Historial",
+    "cleanDatabase": "Limpiar Base de Datos",
+    "settings": "Configuración",
+    "help": "Ayuda",
+    "userGuide": "Guía de Usuario",
+    "about": "Acerca de"
+  },
+  "dialogs": {
+    "about": {
+      "title": "Acerca de Altice File Comparator",
+      "message": "Versión {version}\n\nDesarrollado por: {author}\nEmpresa: {company}\n\nHerramienta profesional para el análisis y comparación de archivos de datos.\n\n© 2024 Altice Dominicana. Todos los derechos reservados."
+    },
+    "cleanDatabase": {
+      "title": "Limpiar Base de Datos",
+      "message": "¿Está seguro de que desea limpiar la base de datos?",
+      "detail": "Esta acción eliminará permanentemente todos los archivos de referencia y el historial de comparaciones. Esta operación no se puede deshacer.",
+      "success": "La base de datos ha sido limpiada exitosamente.",
+      "error": "Error al limpiar la base de datos"
+    },
+    "error": {
+      "title": "Error"
+    },
+    "success": {
+      "title": "Éxito"
+    },
+    "buttons": {
+      "ok": "Aceptar",
+      "cancel": "Cancelar",
+      "close": "Cerrar",
+      "clean": "Limpiar",
+      "save": "Guardar",
+      "export": "Exportar"
+    }
+  },
+  "fileManager": {
+    "referenceFiles": "Archivos de Referencia",
+    "comparisonFiles": "Archivos de Comparación",
+    "selectFile": "Seleccionar Archivo",
+    "dragDropMessage": "Arrastra los archivos aquí o haz clic para seleccionar",
+    "supportedFormats": "Formatos soportados: CSV, XLSX, XLS",
+    "maxFileSize": "Tamaño máximo de archivo: 50 MB",
+    "fileUploaded": "Archivo cargado exitosamente",
+    "uploadError": "Error al cargar el archivo",
+    "invalidFormat": "Formato de archivo no válido",
+    "fileTooLarge": "El archivo es demasiado grande"
+  },
+  "comparison": {
+    "startComparison": "Iniciar Comparación",
+    "comparing": "Comparando archivos...",
+    "comparisonComplete": "Comparación completada",
+    "identical": "Los archivos son idénticos",
+    "differences": "Diferencias encontradas",
+    "processing": "Procesando",
+    "exportReport": "Exportar Reporte",
+    "saveToLibrary": "Guardar en Biblioteca"
+  },
+  "history": {
+    "title": "Historial de Comparaciones",
+    "noHistory": "No hay comparaciones en el historial",
+    "date": "Fecha",
+    "referenceFile": "Archivo de Referencia",
+    "comparisonFile": "Archivo de Comparación",
+    "result": "Resultado",
+    "differences": "Diferencias",
+    "identical": "Idénticos",
+    "viewDetails": "Ver Detalles",
+    "exportHistory": "Exportar Historial"
+  },
+  "library": {
+    "title": "Biblioteca de Referencias",
+    "addReference": "Agregar Referencia",
+    "noReferences": "No hay archivos de referencia",
+    "fileName": "Nombre del Archivo",
+    "uploadDate": "Fecha de Carga",
+    "fileSize": "Tamaño",
+    "actions": "Acciones",
+    "use": "Usar",
+    "delete": "Eliminar",
+    "description": "Descripción"
+  },
+  "notifications": {
+    "fileUploaded": "Archivo cargado exitosamente",
+    "comparisonSaved": "Comparación guardada en el historial",
+    "reportExported": "Reporte exportado exitosamente",
+    "referenceAdded": "Archivo agregado a la biblioteca",
+    "referenceDeleted": "Archivo eliminado de la biblioteca",
+    "error": "Ha ocurrido un error",
+    "success": "Operación completada exitosamente"
+  }
+}

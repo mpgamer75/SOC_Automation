@@ -1,0 +1,51 @@
+appId: com.altice.filecomparator
+productName: Altice File Comparator
+copyright: "Copyright © 2025 Altice Dominicana. Todos los derechos reservados."
+electronVersion: 27.1.0
+
+directories:
+  buildResources: installer/assets
+  output: dist
+
+files:
+  - "app/**/*"
+  - "frontend2/out/**/*"
+  - "backend/dist/altice-backend.exe"
+  - "!**/node_modules"
+  - "!**/.git"
+  - "!**/README.md"
+
+mac:
+  icon: installer/assets/icon.icns
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+
+win:
+  icon: installer/assets/icon.ico
+  target:
+    - target: nsis
+      arch: [x64]
+  requestedExecutionLevel: requireAdministrator
+  verifyUpdateCodeSignature: false
+
+nsis:
+  oneClick: false
+  perMachine: true
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  menuCategory: "Herramientas Altice"
+  shortcutName: "Altice File Comparator"
+  displayLanguageSelector: false
+  installerLanguages: ["es"]
+  language: "3082"
+  artifactName: "${productName}-${version}-Instalador.${ext}"
+  include: installer/installer-config.iss
+
+linux:
+  icon: installer/assets/icon.png
+  target:
+    - target: AppImage
+      arch: [x64]

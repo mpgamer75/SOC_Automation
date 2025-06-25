@@ -1,0 +1,27 @@
+PREPARACIÓN PARA LA INSTALACIÓN
+ALTICE FILE COMPARATOR
+
+Antes de continuar con la instalación, tenga en cuenta lo siguiente:
+
+REQUISITOS DEL SISTEMA:
+- Windows 10 de 64 bits o superior
+- 4 GB de RAM (recomendado: 8 GB)
+- 500 MB de espacio libre en disco
+- Procesador Intel/AMD de 2 GHz o superior
+
+PREPARACIÓN:
+- Cierre todas las aplicaciones de Office (Excel, etc.)
+- Asegúrese de tener permisos de administrador
+- Desactive temporalmente el antivirus si es necesario
+
+CARACTERÍSTICAS QUE SE INSTALARÁN:
+✓ Motor de comparación de archivos avanzado
+✓ Interfaz gráfica moderna y fácil de usar
+✓ Base de datos SQLite integrada
+✓ Biblioteca de archivos de referencia
+✓ Generador de reportes profesionales
+✓ Visualizaciones interactivas
+✓ Historial de comparaciones
+✓ Accesos directos automáticos
+
+TIEMPO ESTIMADO DE INSTALACIÓN: 2-3 minutos

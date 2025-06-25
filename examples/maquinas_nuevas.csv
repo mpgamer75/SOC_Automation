@@ -1,0 +1,14 @@
+Nombre_Maquina,IP_Address,Departamento,Estado,Ultimo_Acceso,Usuario_Responsable,Notas
+PC-SALES-001,192.168.1.20,Ventas,Activa,2024-01-16 08:45:00,Maria Garcia,Actualizada
+PC-HR-001,192.168.1.30,RRHH,Activa,2024-01-16 10:15:00,Carlos Lopez,Actualizada
+PC-FIN-001,192.168.1.40,Finanzas,Activa,2024-01-16 11:20:00,Ana Rodriguez,Actualizada
+PC-IT-001,192.168.1.50,IT,Activa,2024-01-16 12:00:00,Pedro Martinez,Actualizada
+PC-SALES-002,192.168.1.21,Ventas,Activa,2024-01-16 13:30:00,Lucia Fernandez,Actualizada
+PC-HR-002,192.168.1.31,RRHH,Activa,2024-01-16 14:45:00,Ricardo Torres,Actualizada
+PC-FIN-002,192.168.1.41,Finanzas,Activa,2024-01-16 15:20:00,Sofia Jimenez,Actualizada
+PC-IT-002,192.168.1.51,IT,Activa,2024-01-16 16:00:00,Diego Herrera,Actualizada
+PC-NEW-SALES-001,192.168.1.25,Ventas,Activa,2024-01-16 09:00:00,Nuevo Vendedor,Nueva máquina
+PC-NEW-HR-001,192.168.1.35,RRHH,Activa,2024-01-16 10:00:00,Nuevo RH,Nueva máquina
+PC-NEW-FIN-001,192.168.1.45,Finanzas,Activa,2024-01-16 11:00:00,Nuevo Finanzas,Nueva máquina
+PC-NEW-IT-001,192.168.1.55,IT,Activa,2024-01-16 12:00:00,Nuevo IT,Nueva máquina
+PC-NEW-ADMIN-001,192.168.1.15,IT,Activa,2024-01-16 13:00:00,Nuevo Admin,Nueva máquina 

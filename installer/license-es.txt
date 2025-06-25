@@ -1,0 +1,27 @@
+ACUERDO DE LICENCIA DE SOFTWARE
+ALTICE FILE COMPARATOR
+
+IMPORTANTE: LEA CUIDADOSAMENTE ESTE ACUERDO DE LICENCIA ANTES DE INSTALAR O USAR ESTE SOFTWARE.
+
+1. CONCESIÓN DE LICENCIA
+Altice Dominicana le concede una licencia no exclusiva para usar Altice File Comparator únicamente para fines internos de la empresa.
+
+2. RESTRICCIONES
+- No puede distribuir, copiar o modificar este software
+- No puede realizar ingeniería inversa del software
+- El software es exclusivo para uso interno de Altice Dominicana
+
+3. PROPIEDAD INTELECTUAL
+Todos los derechos de propiedad intelectual pertenecen a Altice Dominicana.
+
+4. LIMITACIÓN DE GARANTÍA
+Este software se proporciona "tal como está" sin garantías de ningún tipo.
+
+5. LIMITACIÓN DE RESPONSABILIDAD
+Altice Dominicana no será responsable por daños directos o indirectos resultantes del uso de este software.
+
+Al instalar este software, usted acepta estos términos y condiciones.
+
+© 2024 Altice Dominicana. Todos los derechos reservados.
+Desarrollado por: Charles Lantigua Jorge
+Departamento de IT - Altice Dominicana
